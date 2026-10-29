@@ -1,4 +1,5 @@
-# QuickContractors Claims Tracker System  
+# QuickContractors Claims Tracker System
+
 ## Product Requirements Document (PRD) — Version 1.1
 
 **Document status:** Approved for implementation  
@@ -54,31 +55,31 @@ The system is designed around the claims team’s daily workflow, especially rev
 
 ### 2.4 Intended Users
 
-| Role | Stored role value | Primary responsibilities |
-|---|---|---|
-| Claim Adjuster | `Claim_Adjuster` | Manage only claims assigned to them; create and update claims; schedule, update, and complete follow-ups; record actions; close or reopen assigned claims; view guidance. |
-| Supervisor | `Supervisor` | View and manage all claims; reassign and take over claims; manage Claim Adjuster accounts; create and edit guidance; monitor workload and overdue work. |
-| Director | `Director` | View and manage all claims; reassign and take over claims; manage all user accounts; create, edit, approve, and deactivate guidance; review overall claim activity and workload. |
+| Role           | Stored role value | Primary responsibilities                                                                                                                                                         |
+| -------------- | ----------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Claim Adjuster | `Claim_Adjuster`  | Manage only claims assigned to them; create and update claims; schedule, update, and complete follow-ups; record actions; close or reopen assigned claims; view guidance.        |
+| Supervisor     | `Supervisor`      | View and manage all claims; reassign and take over claims; manage Claim Adjuster accounts; create and edit guidance; monitor workload and overdue work.                          |
+| Director       | `Director`        | View and manage all claims; reassign and take over claims; manage all user accounts; create, edit, approve, and deactivate guidance; review overall claim activity and workload. |
 
 Third-party contractors and E-tech technicians are claim parties, not system login users.
 
 ### 2.5 Technology Stack
 
-| Category | Approved technology | Implementation rule |
-|---|---|---|
-| Backend | Procedural PHP | No Laravel or other backend framework. |
-| Database access | MySQLi | Use prepared statements for all user-supplied values. PDO is excluded. |
-| Database | MySQL-compatible database using InnoDB | Use transactions and foreign keys where supported. |
-| Frontend | HTML5, CSS, Vanilla JavaScript | No frontend framework is required. |
-| UI framework | Bootstrap 5.3 | Use approved responsive layout and components. |
-| Icons | Font Awesome 6 | Use accessible labels for icon-only controls. |
-| Alerts and confirmations | SweetAlert2 | Use for required confirmations and user feedback. |
-| Hosting | InfinityFree | Verify supported PHP, MySQL, HTTPS, backup, and deployment capabilities. |
-| Local PHP environment | Herd | Development only. |
-| Local database service | DBngin | Development only. |
-| Database management | TablePlus | Development and database inspection only. |
-| File transfer | FileZilla | Deployment utility only where required by the host. |
-| UI/UX design | Figma | Optional design tool only. |
+| Category                 | Approved technology                    | Implementation rule                                                      |
+| ------------------------ | -------------------------------------- | ------------------------------------------------------------------------ |
+| Backend                  | Procedural PHP                         | No Laravel or other backend framework.                                   |
+| Database access          | MySQLi                                 | Use prepared statements for all user-supplied values. PDO is excluded.   |
+| Database                 | MySQL-compatible database using InnoDB | Use transactions and foreign keys where supported.                       |
+| Frontend                 | HTML5, CSS, Vanilla JavaScript         | No frontend framework is required.                                       |
+| UI framework             | Bootstrap 5.3                          | Use approved responsive layout and components.                           |
+| Icons                    | Font Awesome 6                         | Use accessible labels for icon-only controls.                            |
+| Alerts and confirmations | SweetAlert2                            | Use for required confirmations and user feedback.                        |
+| Hosting                  | InfinityFree                           | Verify supported PHP, MySQL, HTTPS, backup, and deployment capabilities. |
+| Local PHP environment    | Herd                                   | Development only.                                                        |
+| Local database service   | DBngin                                 | Development only.                                                        |
+| Database management      | TablePlus                              | Development and database inspection only.                                |
+| File transfer            | FileZilla                              | Deployment utility only where required by the host.                      |
+| UI/UX design             | Figma                                  | Optional design tool only.                                               |
 
 ### 2.6 V1.0 Scope
 
@@ -130,14 +131,14 @@ Provide QuickContractors with a centralized claims tracking system that enables 
 
 ### 3.2 Specific Goals
 
-| Goal | Requirement | Success criterion |
-|---|---|---|
-| Improve daily follow-up management | Display Overdue, Due Today, and Upcoming follow-up queues. | Users can identify required daily work without manually reviewing every claim. |
-| Establish claim ownership | Require an assigned handler for active claims and preserve assignment history. | The current handler is always clear for active claims. |
-| Improve traceability | Preserve follow-up, action, activity, lifecycle, and assignment history. | Users can understand what happened, when it happened, and who performed it. |
-| Improve prioritization | Support six approved priority levels and distinguish urgent or escalated claims. | High-priority claims are identifiable without confusing priority with status. |
-| Provide management visibility | Give Supervisor and Director appropriate access to claims, workload, overdue work, and user management. | Management can monitor operations without bypassing authorization. |
-| Protect claim records | Enforce authentication, server-side authorization, validation, prepared statements, CSRF protection, and safe errors. | Unauthorized users cannot access or modify restricted records. |
+| Goal                               | Requirement                                                                                                           | Success criterion                                                              |
+| ---------------------------------- | --------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------ |
+| Improve daily follow-up management | Display Overdue, Due Today, and Upcoming follow-up queues.                                                            | Users can identify required daily work without manually reviewing every claim. |
+| Establish claim ownership          | Require an assigned handler for active claims and preserve assignment history.                                        | The current handler is always clear for active claims.                         |
+| Improve traceability               | Preserve follow-up, action, activity, lifecycle, and assignment history.                                              | Users can understand what happened, when it happened, and who performed it.    |
+| Improve prioritization             | Support six approved priority levels and distinguish urgent or escalated claims.                                      | High-priority claims are identifiable without confusing priority with status.  |
+| Provide management visibility      | Give Supervisor and Director appropriate access to claims, workload, overdue work, and user management.               | Management can monitor operations without bypassing authorization.             |
+| Protect claim records              | Enforce authentication, server-side authorization, validation, prepared statements, CSRF protection, and safe errors. | Unauthorized users cannot access or modify restricted records.                 |
 
 ---
 
@@ -193,11 +194,11 @@ A claim belongs in **Claims Requiring Attention** when either condition is true:
 
 #### Queue Definitions
 
-| Queue | Approved rule |
-|---|---|
-| Overdue | A `Scheduled` follow-up whose due date is before the current Philippine date. |
-| Due Today | A `Scheduled` follow-up whose due date equals the current Philippine date. |
-| Upcoming | A `Scheduled` follow-up with a future due date within the next 7 days. |
+| Queue     | Approved rule                                                                 |
+| --------- | ----------------------------------------------------------------------------- |
+| Overdue   | A `Scheduled` follow-up whose due date is before the current Philippine date. |
+| Due Today | A `Scheduled` follow-up whose due date equals the current Philippine date.    |
+| Upcoming  | A `Scheduled` follow-up with a future due date within the next 7 days.        |
 
 #### Requirements
 
@@ -233,10 +234,10 @@ Every new claim must have:
 
 #### Default Values
 
-| Field | Default value |
-|---|---|
-| Claim status | `Open` |
-| Claim priority | `Normal` |
+| Field          | Default value |
+| -------------- | ------------- |
+| Claim status   | `Open`        |
+| Claim priority | `Normal`      |
 
 #### Approved Claim Types
 
@@ -272,10 +273,10 @@ Each claim must have exactly one `claim_parties` record.
 
 #### Approved Party Types
 
-| Stored value | Meaning |
-|---|---|
-| `Third_Party_Contractor` | Third-party contractor involved in the claim. |
-| `E_Tech` | QuickContractors E-tech technician involved in the claim. |
+| Stored value             | Meaning                                                   |
+| ------------------------ | --------------------------------------------------------- |
+| `Third_Party_Contractor` | Third-party contractor involved in the claim.             |
+| `E_Tech`                 | QuickContractors E-tech technician involved in the claim. |
 
 #### Required Fields
 
@@ -306,23 +307,23 @@ Each claim must have exactly one `claim_parties` record.
 
 #### Approved Statuses
 
-| Status | Definition |
-|---|---|
-| `Open` | The claim is active and requires work. |
-| `In Progress` | Work on the claim is underway. |
-| `Waiting` | Progress depends on a response, information, or another event. |
-| `Resolved` | The claim issue has been resolved. |
-| `Closed` | The claim is closed. |
+| Status        | Definition                                                     |
+| ------------- | -------------------------------------------------------------- |
+| `Open`        | The claim is active and requires work.                         |
+| `In Progress` | Work on the claim is underway.                                 |
+| `Waiting`     | Progress depends on a response, information, or another event. |
+| `Resolved`    | The claim issue has been resolved.                             |
+| `Closed`      | The claim is closed.                                           |
 
 #### Approved Status Transitions
 
-| From status | Allowed transitions |
-|---|---|
-| `Open` | `In Progress`, `Waiting`, `Resolved`, `Closed` |
-| `In Progress` | `Waiting`, `Resolved`, `Closed` |
-| `Waiting` | `In Progress`, `Resolved`, `Closed` |
-| `Resolved` | `Closed`, `Open` |
-| `Closed` | `Open` |
+| From status   | Allowed transitions                            |
+| ------------- | ---------------------------------------------- |
+| `Open`        | `In Progress`, `Waiting`, `Resolved`, `Closed` |
+| `In Progress` | `Waiting`, `Resolved`, `Closed`                |
+| `Waiting`     | `In Progress`, `Resolved`, `Closed`            |
+| `Resolved`    | `Closed`, `Open`                               |
+| `Closed`      | `Open`                                         |
 
 #### Requirements
 
@@ -347,14 +348,14 @@ Each claim must have exactly one `claim_parties` record.
 
 #### Approved Priority Values
 
-| Priority | Display color | Meaning |
-|---|---|---|
-| `Non-Urgent` | Green | Routine work with no immediate action required. |
-| `Low` | Blue | Low-impact work requiring attention. |
-| `Normal` | Yellow | Standard work requiring normal attention. |
-| `High` | Amber | Work requiring increased attention. |
-| `Urgent` | Orange | Work requiring prompt action. |
-| `Escalated` | Red | Work requiring escalation and immediate management attention. |
+| Priority     | Display color | Meaning                                                       |
+| ------------ | ------------- | ------------------------------------------------------------- |
+| `Non-Urgent` | Green         | Routine work with no immediate action required.               |
+| `Low`        | Blue          | Low-impact work requiring attention.                          |
+| `Normal`     | Yellow        | Standard work requiring normal attention.                     |
+| `High`       | Amber         | Work requiring increased attention.                           |
+| `Urgent`     | Orange        | Work requiring prompt action.                                 |
+| `Escalated`  | Red           | Work requiring escalation and immediate management attention. |
 
 #### Requirements
 
@@ -619,11 +620,11 @@ At minimum, the system must record activity for changes to:
 
 #### Menu Visibility
 
-| Role | Store access |
-|---|---|
-| Claim Adjuster | View only |
-| Supervisor | Full approved access |
-| Director | Full approved access |
+| Role           | Store access         |
+| -------------- | -------------------- |
+| Claim Adjuster | View only            |
+| Supervisor     | Full approved access |
+| Director       | Full approved access |
 
 #### Acceptance Criteria
 
@@ -691,15 +692,15 @@ At minimum, the system must record activity for changes to:
 
 #### Permissions
 
-| Role | Guidance permission |
-|---|---|
-| Claim Adjuster | View only |
-| Supervisor | Create and edit |
-| Director | Create, edit, approve, and deactivate |
+| Role           | Guidance permission                   |
+| -------------- | ------------------------------------- |
+| Claim Adjuster | View only                             |
+| Supervisor     | Create and edit                       |
+| Director       | Create, edit, approve, and deactivate |
 
 #### Requirements
 
-- Every guidance edit must create a new revision record.
+- Every guidance edit and every guidance status change (approval or deactivation) must create a new revision record that stores the resulting status and the acting user.
 - Previous guidance revisions must remain viewable.
 - Previous revisions must not be deleted through the application.
 - Guidance deactivation requires a SweetAlert2 confirmation dialog.
@@ -710,26 +711,26 @@ At minimum, the system must record activity for changes to:
 1. Claim Adjusters can view but not edit guidance.
 2. Supervisors can create and edit guidance.
 3. Directors can create, edit, approve, and deactivate guidance.
-4. Every edit creates a revision.
+4. Every edit, approval, and deactivation creates a revision.
 5. Prior revisions remain available.
 
 ---
 
 ## 5. Non-Functional Requirements
 
-| Area | Requirement |
-|---|---|
-| Security | Enforce authentication, server-side authorization, prepared statements, output escaping, CSRF protection, secure sessions, and safe errors. |
-| Data integrity | Enforce unique identifiers, foreign keys, required fields, controlled values, and transaction-safe related updates. |
-| Auditability | Preserve follow-up, action, activity, lifecycle, assignment, and guidance-revision history. |
-| Usability | Make queues, ownership, status, priority, and next actions clear. |
-| Accessibility | Use readable labels, sufficient contrast, keyboard-accessible controls, and visible focus states. |
-| Responsiveness | Support desktop, tablet, and mobile screen sizes. |
-| Reliability | Prevent partial updates through transactions and safe error handling. |
-| Performance | Use appropriate indexes, server-side pagination, and efficient dashboard queries. |
-| Maintainability | Use procedural PHP, MySQLi, consistent naming, version-controlled SQL, and documented decisions. |
-| Recovery | Document and test database backup and restoration procedures. |
-| Date handling | Store dates and timestamps in UTC; display dates and calculate the current date using `Asia/Manila`. |
+| Area            | Requirement                                                                                                                                 |
+| --------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| Security        | Enforce authentication, server-side authorization, prepared statements, output escaping, CSRF protection, secure sessions, and safe errors. |
+| Data integrity  | Enforce unique identifiers, foreign keys, required fields, controlled values, and transaction-safe related updates.                         |
+| Auditability    | Preserve follow-up, action, activity, lifecycle, assignment, and guidance-revision history.                                                 |
+| Usability       | Make queues, ownership, status, priority, and next actions clear.                                                                           |
+| Accessibility   | Use readable labels, sufficient contrast, keyboard-accessible controls, and visible focus states.                                           |
+| Responsiveness  | Support desktop, tablet, and mobile screen sizes.                                                                                           |
+| Reliability     | Prevent partial updates through transactions and safe error handling.                                                                       |
+| Performance     | Use appropriate indexes, server-side pagination, and efficient dashboard queries.                                                           |
+| Maintainability | Use procedural PHP, MySQLi, consistent naming, version-controlled SQL, and documented decisions.                                            |
+| Recovery        | Document and test database backup and restoration procedures.                                                                               |
+| Date handling   | Store dates and timestamps in UTC; display dates and calculate the current date using `Asia/Manila`.                                        |
 
 ---
 
@@ -764,16 +765,16 @@ The sidebar must include:
 
 ### 7.2 Role-Based Menu Visibility
 
-| Menu | Claim Adjuster | Supervisor | Director |
-|---|---:|---:|---:|
-| Dashboard | Yes | Yes | Yes |
-| Claims | Yes | Yes | Yes |
-| Follow-ups | Yes | Yes | Yes |
-| Action History | Yes | Yes | Yes |
-| Claim Guidance | Yes | Yes | Yes |
-| Users | No | Yes | Yes |
-| Stores | Yes — view only | Yes | Yes |
-| Service Calls | No | Yes | Yes |
+| Menu           |  Claim Adjuster | Supervisor | Director |
+| -------------- | --------------: | ---------: | -------: |
+| Dashboard      |             Yes |        Yes |      Yes |
+| Claims         |             Yes |        Yes |      Yes |
+| Follow-ups     |             Yes |        Yes |      Yes |
+| Action History |             Yes |        Yes |      Yes |
+| Claim Guidance |             Yes |        Yes |      Yes |
+| Users          |              No |        Yes |      Yes |
+| Stores         | Yes — view only |        Yes |      Yes |
+| Service Calls  |              No |        Yes |      Yes |
 
 ### 7.3 Required Confirmation Dialogs
 
@@ -807,7 +808,7 @@ Color must never be the only indicator of status, priority, or urgency.
 
 ## 8. Data Integrity Requirements
 
-- Use the approved 11-table model.
+- Use the approved 13-table model.
 - `claims.job_id` is the unique business claim identifier.
 - Every claim must have exactly one store.
 - Every claim must have exactly one claim party.
@@ -824,22 +825,22 @@ Color must never be the only indicator of status, priority, or urgency.
 
 ## 9. Testing and Acceptance Plan
 
-| Test area | Required verification |
-|---|---|
-| Database | All 11 approved tables, relationships, constraints, indexes, and seed values match the approved schema. |
-| Authentication | Login, logout, inactive accounts, session expiration, and denied access work correctly. |
-| Authorization | Each role can perform only its approved operations. |
-| Claim creation | Required store, party, handler, follow-up, `job_id`, type, status, and priority rules are enforced. |
-| Claim status | Approved transitions pass; prohibited transitions fail. |
-| Claim priority | All six values work and urgent/escalated claims appear in Claims Requiring Attention. |
-| Follow-ups | One-current-follow-up rule, superseding, completion, cancellation, and queue classification work correctly. |
-| History | Action, activity, lifecycle, assignment, and guidance-revision history are preserved. |
-| Assignment | Reassignment and take-over follow role, confirmation, reopening, and history rules. |
-| Search and filters | All approved filters, pagination, authorization, and empty states work correctly. |
-| UI | Sidebar visibility, columns, dashboard metrics, dialogs, and responsive behavior match the approved design. |
-| Security | CSRF, XSS, SQL injection, direct URL access, and malformed-request tests pass. |
-| Recovery | Backup and restore procedures are documented and tested. |
-| Deployment | The application works within InfinityFree’s supported PHP, MySQL, HTTPS, and hosting limitations. |
+| Test area          | Required verification                                                                                       |
+| ------------------ | ----------------------------------------------------------------------------------------------------------- |
+| Database           | All 13 approved tables, relationships, constraints, indexes, and seed values match the approved schema.     |
+| Authentication     | Login, logout, inactive accounts, session expiration, and denied access work correctly.                     |
+| Authorization      | Each role can perform only its approved operations.                                                         |
+| Claim creation     | Required store, party, handler, follow-up, `job_id`, type, status, and priority rules are enforced.         |
+| Claim status       | Approved transitions pass; prohibited transitions fail.                                                     |
+| Claim priority     | All six values work and urgent/escalated claims appear in Claims Requiring Attention.                       |
+| Follow-ups         | One-current-follow-up rule, superseding, completion, cancellation, and queue classification work correctly. |
+| History            | Action, activity, lifecycle, assignment, and guidance-revision history are preserved.                       |
+| Assignment         | Reassignment and take-over follow role, confirmation, reopening, and history rules.                         |
+| Search and filters | All approved filters, pagination, authorization, and empty states work correctly.                           |
+| UI                 | Sidebar visibility, columns, dashboard metrics, dialogs, and responsive behavior match the approved design. |
+| Security           | CSRF, XSS, SQL injection, direct URL access, and malformed-request tests pass.                              |
+| Recovery           | Backup and restore procedures are documented and tested.                                                    |
+| Deployment         | The application works within InfinityFree’s supported PHP, MySQL, HTTPS, and hosting limitations.           |
 
 ---
 
