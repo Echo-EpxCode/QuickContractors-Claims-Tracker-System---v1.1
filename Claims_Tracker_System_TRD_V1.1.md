@@ -1,4 +1,5 @@
-# Claims Tracker System  
+# Claims Tracker System
+
 ## Technical Requirements Document (TRD) — Version 1.1
 
 **Document status:** Approved for technical implementation  
@@ -72,19 +73,19 @@ The following must not be implemented in V1.0:
 
 ## 3. Technology Requirements
 
-| Layer | Approved technology | Requirement |
-|---|---|---|
-| Hosting | InfinityFree | Verify PHP version, MySQL/MariaDB version, HTTPS, file deployment, database limits, backup options, and cron availability before deployment. |
-| Backend | Procedural PHP 8.x | Use only a PHP version supported by the selected InfinityFree plan. |
-| Database access | MySQLi | Use prepared statements for all user-controlled values. Do not use PDO. |
-| Database | MySQL-compatible database using InnoDB | Use InnoDB for transactional integrity and foreign keys where supported. |
-| Character encoding | `utf8mb4` | Use a consistent Unicode-safe collation. |
-| Markup | HTML5 | Use semantic, accessible markup. |
-| Styling | CSS3 and Bootstrap 5.3 | Apply the approved Design Brief. |
-| Client behavior | Vanilla JavaScript | No frontend framework. |
-| Icons | Font Awesome 6 | Provide accessible names for icon-only controls. |
-| Alerts | SweetAlert2 | Use for required confirmations and user feedback. |
-| Source control | Git | Maintain reviewed, version-controlled changes. |
+| Layer              | Approved technology                    | Requirement                                                                                                                                  |
+| ------------------ | -------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
+| Hosting            | InfinityFree                           | Verify PHP version, MySQL/MariaDB version, HTTPS, file deployment, database limits, backup options, and cron availability before deployment. |
+| Backend            | Procedural PHP 8.x                     | Use only a PHP version supported by the selected InfinityFree plan.                                                                          |
+| Database access    | MySQLi                                 | Use prepared statements for all user-controlled values. Do not use PDO.                                                                      |
+| Database           | MySQL-compatible database using InnoDB | Use InnoDB for transactional integrity and foreign keys where supported.                                                                     |
+| Character encoding | `utf8mb4`                              | Use a consistent Unicode-safe collation.                                                                                                     |
+| Markup             | HTML5                                  | Use semantic, accessible markup.                                                                                                             |
+| Styling            | CSS3 and Bootstrap 5.3                 | Apply the approved Design Brief.                                                                                                             |
+| Client behavior    | Vanilla JavaScript                     | No frontend framework.                                                                                                                       |
+| Icons              | Font Awesome 6                         | Provide accessible names for icon-only controls.                                                                                             |
+| Alerts             | SweetAlert2                            | Use for required confirmations and user feedback.                                                                                            |
+| Source control     | Git                                    | Maintain reviewed, version-controlled changes.                                                                                               |
 
 ### 3.1 Coding Requirements
 
@@ -105,29 +106,31 @@ The following must not be implemented in V1.0:
 
 ### 4.1 Table Count
 
-The system must use the approved **11-table model**.
+The system must use the approved **13-table model**: the eleven tables in §4.2 plus the two guidance tables in §4.3.
 
 ### 4.2 Required Tables
 
-| Table | Approved responsibility |
-|---|---|
-| `users` | User accounts, authentication data, one role per user, and account status. |
-| `stores` | Store records linked to claims. |
-| `claims` | Main claim record, unique `job_id`, status, priority, assigned handler, and claim references. |
-| `claim_types` | Approved claim-type lookup values. |
-| `claim_statuses` | Approved claim lifecycle status lookup values. |
-| `claim_parties` | Required one-to-one claim-party information. |
-| `service_calls` | Optional zero-or-one service-call record per claim. |
-| `follow_ups` | Current and historical follow-up records. |
-| `action_history` | Workflow-action history. |
-| `claim_activity_logs` | Audit events for material claim changes. |
-| `claim_history` | Claim lifecycle and major status-transition history. |
+| Table                      | Approved responsibility                                                                                |
+| -------------------------- | ------------------------------------------------------------------------------------------------------ |
+| `users`                    | User accounts, authentication data, one role per user, and account status.                             |
+| `stores`                   | Store records linked to claims.                                                                        |
+| `claims`                   | Main claim record, unique `job_id`, status, priority, assigned handler, and claim references.          |
+| `claim_types`              | Approved claim-type lookup values.                                                                     |
+| `claim_statuses`           | Approved claim lifecycle status lookup values.                                                         |
+| `claim_parties`            | Required one-to-one claim-party information.                                                           |
+| `service_calls`            | Optional zero-or-one service-call record per claim.                                                    |
+| `follow_ups`               | Current and historical follow-up records.                                                              |
+| `action_history`           | Workflow-action history.                                                                               |
+| `claim_activity_logs`      | Audit events for material claim changes.                                                               |
+| `claim_history`            | Claim lifecycle and major status-transition history.                                                   |
+| `claim_guidance`           | Claim guidance records: title, current content, and guidance status (`Draft`, `Approved`, `Inactive`). |
+| `claim_guidance_revisions` | Preserved revision record created for every guidance edit and every guidance status change.            |
 
 ### 4.3 Claim Guidance Tables
 
-The V1.1 Decision Record requires claim guidance and guidance revisions. The final 11-table model must reconcile this requirement without adding an unapproved twelfth operational table unless the Database Schema Design Document explicitly defines how guidance and revisions are represented within the approved 11-table structure.
+Claim guidance is stored in `claim_guidance`. Every guidance edit and every guidance status change creates a row in `claim_guidance_revisions`. These two tables are an approved addition to the original eleven tables, giving the approved 13-table model. Their columns are defined in the Database Schema Design Document (§4.12 and §4.13).
 
-The implementation must not silently add tables or fields. Any schema adjustment required to support guidance must be documented and approved before SQL is written.
+The implementation must not silently add further tables or fields.
 
 ### 4.4 Required Database Capabilities
 
@@ -173,13 +176,13 @@ Approved values:
 
 ### 4.8 Approved Status Transitions
 
-| From status | Allowed transitions |
-|---|---|
-| `Open` | `In Progress`, `Waiting`, `Resolved`, `Closed` |
-| `In Progress` | `Waiting`, `Resolved`, `Closed` |
-| `Waiting` | `In Progress`, `Resolved`, `Closed` |
-| `Resolved` | `Closed`, `Open` |
-| `Closed` | `Open` |
+| From status   | Allowed transitions                            |
+| ------------- | ---------------------------------------------- |
+| `Open`        | `In Progress`, `Waiting`, `Resolved`, `Closed` |
+| `In Progress` | `Waiting`, `Resolved`, `Closed`                |
+| `Waiting`     | `In Progress`, `Resolved`, `Closed`            |
+| `Resolved`    | `Closed`, `Open`                               |
+| `Closed`      | `Open`                                         |
 
 The database may enforce valid status values, but PHP must enforce permitted transitions.
 
@@ -216,10 +219,10 @@ Priority must remain separate from claim status.
 - `claim_parties` is required for every claim.
 - `party_type` must be either `Third_Party_Contractor` or `E_Tech`.
 - Required fields:
-  - `party_type`
-  - `contractor_email_address`
-  - `legal_company_name`
-  - `company_name`
+    - `party_type`
+    - `contractor_email_address`
+    - `legal_company_name`
+    - `company_name`
 - The claim-to-party relationship must be enforced as one-to-one.
 - The claim party record may be edited or changed after claim creation.
 - Every claim-party change must be recorded in the appropriate claim history or activity record.
@@ -266,12 +269,12 @@ If the target MySQL/MariaDB version supports a suitable partial or filtered uniq
 
 ### 4.15 History-Table Responsibilities
 
-| Table | Approved responsibility |
-|---|---|
-| `follow_ups` | Current and historical follow-up records. |
-| `action_history` | Workflow actions: follow-up scheduled, completed, cancelled, superseded, claim closed, and claim reopened. |
-| `claim_activity_logs` | Audit events for material claim changes: status, priority, assignment, and field changes. |
-| `claim_history` | Claim lifecycle and major status-transition history. |
+| Table                 | Approved responsibility                                                                                    |
+| --------------------- | ---------------------------------------------------------------------------------------------------------- |
+| `follow_ups`          | Current and historical follow-up records.                                                                  |
+| `action_history`      | Workflow actions: follow-up scheduled, completed, cancelled, superseded, claim closed, and claim reopened. |
+| `claim_activity_logs` | Audit events for material claim changes: status, priority, assignment, and field changes.                  |
+| `claim_history`       | Claim lifecycle and major status-transition history.                                                       |
 
 History and audit records must not be deleted through normal application actions.
 
@@ -281,11 +284,11 @@ History and audit records must not be deleted through normal application actions
 
 ### 5.1 Role Values
 
-| Stored role value | Display label |
-|---|---|
-| `Claim_Adjuster` | Claim Adjuster |
-| `Supervisor` | Supervisor |
-| `Director` | Director |
+| Stored role value | Display label  |
+| ----------------- | -------------- |
+| `Claim_Adjuster`  | Claim Adjuster |
+| `Supervisor`      | Supervisor     |
+| `Director`        | Director       |
 
 ### 5.2 Role Model
 
@@ -295,11 +298,11 @@ History and audit records must not be deleted through normal application actions
 
 ### 5.3 Claim Visibility
 
-| Role | Claim visibility |
-|---|---|
+| Role             | Claim visibility             |
+| ---------------- | ---------------------------- |
 | `Claim_Adjuster` | Only claims assigned to them |
-| `Supervisor` | All claims |
-| `Director` | All claims |
+| `Supervisor`     | All claims                   |
+| `Director`       | All claims                   |
 
 ### 5.4 Claim Work Permissions
 
@@ -346,7 +349,7 @@ All three roles may perform authorized claim work, including:
 - Claim Adjuster can view guidance only.
 - Supervisor can create and edit guidance.
 - Director can create, edit, approve, and deactivate guidance.
-- Every guidance edit must create a new revision record.
+- Every guidance edit and every guidance status change (approval or deactivation) must create a new revision record.
 - Previous guidance revisions remain viewable and must not be deleted through the application.
 
 ### 5.9 Guidance Lifecycle Statuses
@@ -383,14 +386,14 @@ The final directory structure must preserve the approved project architecture an
 - Use POST for operations that create, update, complete, cancel, close, reopen, reassign, take over, deactivate, or otherwise change state.
 - Do not change database state through GET requests.
 - Before processing a state-changing request, verify:
-  1. Authenticated session.
-  2. Active account.
-  3. Role permission.
-  4. Record-level authorization.
-  5. CSRF token.
-  6. HTTP method.
-  7. Required input.
-  8. Business rules.
+    1. Authenticated session.
+    2. Active account.
+    3. Role permission.
+    4. Record-level authorization.
+    5. CSRF token.
+    6. HTTP method.
+    7. Required input.
+    8. Business rules.
 - Use transactions for related multi-table updates.
 - Return clear success or failure feedback without exposing SQL, credentials, stack traces, or internal paths.
 - Make critical state-changing operations safe against duplicate submission.
@@ -522,7 +525,7 @@ Do not claim backups are successful until a restore test passes.
 V1.0 is technically acceptable when:
 
 - The application runs on the approved InfinityFree environment using procedural PHP and MySQLi.
-- The approved 11-table model is implemented and verified.
+- The approved 13-table model is implemented and verified.
 - `claim_attachments`, attachment functionality, file uploads, email reminders, notifications, Excel import, and external integrations are absent.
 - `claims.job_id` uniqueness is enforced.
 - Every claim has exactly one required store and exactly one required claim party.
@@ -545,7 +548,7 @@ Confirm before or during implementation:
 
 1. Exact InfinityFree-supported PHP and MySQL/MariaDB versions.
 2. Final column definitions, primary-key types, defaults, and timestamp conventions.
-3. Final representation of guidance and guidance revisions within the approved 11-table model.
+3. Final column definitions, foreign keys, and indexes for `claim_guidance` and `claim_guidance_revisions`.
 4. Exact database-compatible mechanism for enforcing one current scheduled follow-up.
 5. Exact foreign-key and deletion/deactivation policies.
 6. Complete role/permission matrix and record-visibility rules.
