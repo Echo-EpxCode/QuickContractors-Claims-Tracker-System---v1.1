@@ -1,4 +1,5 @@
-# Claims Tracker System  
+# Claims Tracker System
+
 ## Implementation Plan — Version 1.1
 
 **Document status:** Approved for implementation planning  
@@ -76,19 +77,19 @@ Do not implement, display, or create placeholder functionality for:
 
 ## 3. Approved Technical Environment
 
-| Component | Approved technology or decision |
-|---|---|
-| Backend | Procedural PHP |
-| Database access | MySQLi |
-| Database engine | MySQL-compatible database using InnoDB |
-| Frontend | HTML, CSS, Vanilla JavaScript, Bootstrap 5.3 |
-| Icons | Font Awesome 6 |
-| User-facing alerts | SweetAlert2 |
-| Local PHP environment | Herd |
-| Local database service | DBngin |
-| Database inspection | TablePlus |
-| Hosting | InfinityFree |
-| File transfer | FileZilla, where required by the hosting method |
+| Component              | Approved technology or decision                 |
+| ---------------------- | ----------------------------------------------- |
+| Backend                | Procedural PHP                                  |
+| Database access        | MySQLi                                          |
+| Database engine        | MySQL-compatible database using InnoDB          |
+| Frontend               | HTML, CSS, Vanilla JavaScript, Bootstrap 5.3    |
+| Icons                  | Font Awesome 6                                  |
+| User-facing alerts     | SweetAlert2                                     |
+| Local PHP environment  | Herd                                            |
+| Local database service | DBngin                                          |
+| Database inspection    | TablePlus                                       |
+| Hosting                | InfinityFree                                    |
+| File transfer          | FileZilla, where required by the hosting method |
 
 Use prepared statements for all queries involving supplied values. Keep credentials out of publicly accessible source files and repositories.
 
@@ -125,13 +126,13 @@ Approved statuses:
 
 Approved transitions:
 
-| From status | Allowed transitions |
-|---|---|
-| `Open` | `In Progress`, `Waiting`, `Resolved`, `Closed` |
-| `In Progress` | `Waiting`, `Resolved`, `Closed` |
-| `Waiting` | `In Progress`, `Resolved`, `Closed` |
-| `Resolved` | `Closed`, `Open` |
-| `Closed` | `Open` |
+| From status   | Allowed transitions                            |
+| ------------- | ---------------------------------------------- |
+| `Open`        | `In Progress`, `Waiting`, `Resolved`, `Closed` |
+| `In Progress` | `Waiting`, `Resolved`, `Closed`                |
+| `Waiting`     | `In Progress`, `Resolved`, `Closed`            |
+| `Resolved`    | `Closed`, `Open`                               |
+| `Closed`      | `Open`                                         |
 
 ### 4.3 Follow-Up Rules
 
@@ -158,11 +159,11 @@ Approved transitions:
 
 ### 4.5 Role Rules
 
-| Stored role value | Display label |
-|---|---|
-| `Claim_Adjuster` | Claim Adjuster |
-| `Supervisor` | Supervisor |
-| `Director` | Director |
+| Stored role value | Display label  |
+| ----------------- | -------------- |
+| `Claim_Adjuster`  | Claim Adjuster |
+| `Supervisor`      | Supervisor     |
+| `Director`        | Director       |
 
 - Each user has exactly one role.
 - The role is stored directly on the user record.
@@ -189,7 +190,7 @@ Approved transitions:
 - Claim Adjuster can view guidance only.
 - Supervisor can create and edit guidance.
 - Director can create, edit, approve, and deactivate guidance.
-- Every guidance edit must create a new revision.
+- Every guidance edit and every guidance status change (approval or deactivation) must create a new revision.
 - Previous revisions remain viewable and must not be deleted through the application.
 - Guidance statuses are `Draft`, `Approved`, and `Inactive`.
 
@@ -204,14 +205,14 @@ Approved transitions:
 #### Activities
 
 1. Review PRD V1.1, TRD V1.1, Design Brief V1.1, Background Schema V1.1, App Flow, and Decision Record V1.1.
-2. Confirm that the approved database model is the 11-table model.
+2. Confirm that the approved database model is the 13-table model (the original eleven tables plus `claim_guidance` and `claim_guidance_revisions`).
 3. Confirm that `follow_ups` replaces `actions`.
 4. Confirm that `claim_attachments` and attachment functionality are excluded.
 5. Extract all approved claim types, statuses, priorities, party types, follow-up statuses, guidance statuses, and role values.
 6. Extract the approved status-transition matrix.
 7. Extract role permissions, claim visibility, user-management rules, guidance permissions, and menu visibility.
 8. Extract dashboard metrics, claims-list columns, filters, pagination, and confirmation-dialog requirements.
-9. Confirm the guidance and guidance-revision representation within the approved 11-table model.
+9. Confirm the column definitions for `claim_guidance` and `claim_guidance_revisions`.
 10. Create a requirement-to-feature traceability checklist.
 11. Create initial test cases for successful and rejected operations.
 12. Record unresolved questions and obtain decisions before implementation.
@@ -238,7 +239,7 @@ Approved transitions:
 3. Start or configure MySQL through DBngin.
 4. Create or select the approved local development database.
 5. Connect through TablePlus and verify connectivity.
-6. Create the approved 11 tables in dependency order.
+6. Create the approved 13 tables in dependency order.
 7. Define primary keys, foreign keys, required columns, data types, defaults, indexes, and unique constraints.
 8. Enforce unique `claims.job_id`.
 9. Enforce one required store per claim.
@@ -389,7 +390,7 @@ Approved transitions:
 13. Enforce Claim Adjuster view-only guidance access.
 14. Enable Supervisor guidance creation and editing.
 15. Enable Director guidance creation, editing, approval, and deactivation.
-16. Create a new revision for every guidance edit.
+16. Create a new revision for every guidance edit and every guidance status change (approval or deactivation).
 17. Preserve prior guidance revisions.
 18. Implement required SweetAlert2 confirmations for deactivation operations.
 
@@ -413,11 +414,11 @@ Approved transitions:
 1. Implement the approved sidebar and role-based menu visibility.
 2. Apply approved visual tokens: sidebar `#343A40`, content background `#F4F6F9`, primary accent `#0D6EFD`, and Roboto.
 3. Implement dashboard metrics:
-   - Open Claims
-   - Overdue Follow-ups
-   - Due Today
-   - Upcoming Follow-ups
-   - Claims Requiring Attention
+    - Open Claims
+    - Overdue Follow-ups
+    - Due Today
+    - Upcoming Follow-ups
+    - Claims Requiring Attention
 4. Implement Claims Requiring Attention for claims with overdue follow-ups or `Urgent`/`Escalated` priority.
 5. Calculate all counts from database records and approved rules.
 6. Apply role and record-visibility restrictions to every dashboard query.
@@ -516,33 +517,33 @@ Approved transitions:
 
 ## 6. Milestones
 
-| Milestone | Completion criteria | Required evidence |
-|---|---|---|
-| M1 — Requirements Baseline Approved | V1.1-aligned requirements, permissions, workflows, exclusions, and schema decisions are traceable. | Requirements checklist and implementation task list |
-| M2 — Development Environment Ready | Local PHP and MySQL run; application connects to the development database. | Environment verification checklist |
-| M3 — Database Verified | Approved 11-table model, relationships, constraints, indexes, seed values, and unique `job_id` rule are verified. | Schema verification results |
-| M4 — Security Foundation Complete | Login, logout, sessions, and server-side role authorization pass tests. | Authentication and authorization test results |
-| M5 — Claim Management Complete | Claim CRUD, statuses, priorities, assignment, take-over, party, search, filters, and pagination work. | Claim-module test results |
-| M6 — Follow-Up Workflow Complete | Follow-ups, history, queues, closure, reopening, and transaction safety work correctly. | Follow-up and history test results |
-| M7 — Supporting Modules Complete | Stores, service calls, users, and guidance follow approved permissions and rules. | Supporting-module test results |
-| M8 — Dashboards Complete | Role-specific dashboards, metrics, menus, and management views follow approved rules. | Role-based UI review and dashboard checks |
-| M9 — Testing Approved | Functional, security, validation, integrity, regression, and recovery checks are complete. | Test summary, defect log, release approval |
-| M10 — Production Deployment Complete | InfinityFree deployment is available and production smoke tests pass. | Deployment record and smoke-test results |
-| M11 — Final Acceptance | Required workflows pass; release-blocking defects are resolved; operational instructions are complete. | Final acceptance checklist |
+| Milestone                            | Completion criteria                                                                                               | Required evidence                                   |
+| ------------------------------------ | ----------------------------------------------------------------------------------------------------------------- | --------------------------------------------------- |
+| M1 — Requirements Baseline Approved  | V1.1-aligned requirements, permissions, workflows, exclusions, and schema decisions are traceable.                | Requirements checklist and implementation task list |
+| M2 — Development Environment Ready   | Local PHP and MySQL run; application connects to the development database.                                        | Environment verification checklist                  |
+| M3 — Database Verified               | Approved 13-table model, relationships, constraints, indexes, seed values, and unique `job_id` rule are verified. | Schema verification results                         |
+| M4 — Security Foundation Complete    | Login, logout, sessions, and server-side role authorization pass tests.                                           | Authentication and authorization test results       |
+| M5 — Claim Management Complete       | Claim CRUD, statuses, priorities, assignment, take-over, party, search, filters, and pagination work.             | Claim-module test results                           |
+| M6 — Follow-Up Workflow Complete     | Follow-ups, history, queues, closure, reopening, and transaction safety work correctly.                           | Follow-up and history test results                  |
+| M7 — Supporting Modules Complete     | Stores, service calls, users, and guidance follow approved permissions and rules.                                 | Supporting-module test results                      |
+| M8 — Dashboards Complete             | Role-specific dashboards, metrics, menus, and management views follow approved rules.                             | Role-based UI review and dashboard checks           |
+| M9 — Testing Approved                | Functional, security, validation, integrity, regression, and recovery checks are complete.                        | Test summary, defect log, release approval          |
+| M10 — Production Deployment Complete | InfinityFree deployment is available and production smoke tests pass.                                             | Deployment record and smoke-test results            |
+| M11 — Final Acceptance               | Required workflows pass; release-blocking defects are resolved; operational instructions are complete.            | Final acceptance checklist                          |
 
 ### 6.1 Dependency Sequence
 
-1. M1 — Requirements Baseline Approved  
-2. M2 — Development Environment Ready  
-3. M3 — Database Verified  
-4. M4 — Security Foundation Complete  
-5. M5 — Claim Management Complete  
-6. M6 — Follow-Up Workflow Complete  
-7. M7 — Supporting Modules Complete  
-8. M8 — Dashboards Complete  
-9. M9 — Testing Approved  
-10. M10 — Production Deployment Complete  
-11. M11 — Final Acceptance  
+1. M1 — Requirements Baseline Approved
+2. M2 — Development Environment Ready
+3. M3 — Database Verified
+4. M4 — Security Foundation Complete
+5. M5 — Claim Management Complete
+6. M6 — Follow-Up Workflow Complete
+7. M7 — Supporting Modules Complete
+8. M8 — Dashboards Complete
+9. M9 — Testing Approved
+10. M10 — Production Deployment Complete
+11. M11 — Final Acceptance
 
 ### 6.2 Milestone Review Rules
 
@@ -616,7 +617,7 @@ A milestone is not complete merely because code has been written; required behav
 
 ### Database and Security
 
-- [ ] Approved 11-table structure and relationships are verified.
+- [ ] Approved 13-table structure and relationships are verified.
 - [ ] `claims.job_id` uniqueness is enforced.
 - [ ] One required store per claim is enforced.
 - [ ] One required claim party per claim is enforced.
@@ -646,7 +647,7 @@ A milestone is not complete merely because code has been written; required behav
 - [ ] `claim_activity_logs` records material claim changes.
 - [ ] `claim_history` records lifecycle and major status transitions.
 - [ ] Assignment history records reassignment and take-over.
-- [ ] Guidance edits create revisions.
+- [ ] Guidance edits and status changes create revisions.
 - [ ] History and audit records are not editable or deletable through normal application actions.
 
 ### Interface and Release
