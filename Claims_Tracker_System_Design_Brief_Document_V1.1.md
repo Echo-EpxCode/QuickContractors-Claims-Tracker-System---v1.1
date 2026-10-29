@@ -1,4 +1,5 @@
-# Claims Tracker System  
+# Claims Tracker System
+
 ## Design Brief Document — Version 1.1
 
 **Document status:** Approved for implementation  
@@ -32,11 +33,11 @@ The interface must:
 
 ### 1.3 Target Users
 
-| Role | Primary interface requirements |
-|---|---|
-| Claim Adjuster | View and manage only assigned claims; track follow-ups; review action history; view guidance. |
-| Supervisor | Monitor all claims; manage Claim Adjuster accounts; reassign or take over claims; create and edit guidance. |
-| Director | Review all claims and operational activity; manage all users; approve and deactivate guidance. |
+| Role           | Primary interface requirements                                                                              |
+| -------------- | ----------------------------------------------------------------------------------------------------------- |
+| Claim Adjuster | View and manage only assigned claims; track follow-ups; review action history; view guidance.               |
+| Supervisor     | Monitor all claims; manage Claim Adjuster accounts; reassign or take over claims; create and edit guidance. |
+| Director       | Review all claims and operational activity; manage all users; approve and deactivate guidance.              |
 
 Visual presentation must never be treated as an authorization mechanism.
 
@@ -98,58 +99,58 @@ The icon direction is a recommendation, not a finalized logo asset.
 
 ### 3.1 Core Colors
 
-| Color | Hex | Application |
-|---|---|---|
-| Sidebar charcoal | `#343A40` | Primary navigation background |
-| Content background | `#F4F6F9` | Main application canvas |
-| Primary blue | `#0D6EFD` | Primary actions, links, and selected states |
-| Surface white | `#FFFFFF` | Cards, tables, forms, and panels |
-| Primary text | `#212529` | Main content text |
-| Secondary text | `#6C757D` | Supporting text and metadata |
-| Border | `#DEE2E6` | Card, input, table, and divider borders |
+| Color              | Hex       | Application                                 |
+| ------------------ | --------- | ------------------------------------------- |
+| Sidebar charcoal   | `#343A40` | Primary navigation background               |
+| Content background | `#F4F6F9` | Main application canvas                     |
+| Primary blue       | `#0D6EFD` | Primary actions, links, and selected states |
+| Surface white      | `#FFFFFF` | Cards, tables, forms, and panels            |
+| Primary text       | `#212529` | Main content text                           |
+| Secondary text     | `#6C757D` | Supporting text and metadata                |
+| Border             | `#DEE2E6` | Card, input, table, and divider borders     |
 
 ### 3.2 Semantic Colors
 
-| Purpose | Hex | Application |
-|---|---|---|
-| Success | `#198754` | Successful operations and completed actions |
-| Warning | `#FFC107` | Caution and approaching deadlines |
-| Danger | `#DC3545` | Overdue actions and destructive operations |
-| Information | `#0DCAF0` | Informational messages |
-| Primary | `#0D6EFD` | Primary actions and links |
+| Purpose     | Hex       | Application                                 |
+| ----------- | --------- | ------------------------------------------- |
+| Success     | `#198754` | Successful operations and completed actions |
+| Warning     | `#FFC107` | Caution and approaching deadlines           |
+| Danger      | `#DC3545` | Overdue actions and destructive operations  |
+| Information | `#0DCAF0` | Informational messages                      |
+| Primary     | `#0D6EFD` | Primary actions and links                   |
 
 ### 3.3 Claim Status Styling
 
-| Claim status | Visual treatment | Meaning |
-|---|---|---|
-| Open | Blue | Active claim requiring work |
-| In Progress | Blue | Work is underway |
-| Waiting | Amber | Waiting on a response, information, or event |
-| Resolved | Green | Claim issue has been resolved |
-| Closed | Neutral gray | Claim is closed |
+| Claim status | Visual treatment | Meaning                                      |
+| ------------ | ---------------- | -------------------------------------------- |
+| Open         | Blue             | Active claim requiring work                  |
+| In Progress  | Blue             | Work is underway                             |
+| Waiting      | Amber            | Waiting on a response, information, or event |
+| Resolved     | Green            | Claim issue has been resolved                |
+| Closed       | Neutral gray     | Claim is closed                              |
 
 ### 3.4 Follow-Up Status Styling
 
-| Follow-up status | Visual treatment | Meaning |
-|---|---|---|
-| Scheduled | Blue | Current follow-up awaiting its due date |
-| Overdue | Red | Scheduled follow-up due before the current Philippine date |
-| Completed | Green | Follow-up has been completed |
-| Cancelled | Neutral gray | Follow-up was cancelled |
-| Superseded | Neutral gray | Follow-up was replaced by a newer current follow-up |
+| Follow-up status | Visual treatment | Meaning                                                    |
+| ---------------- | ---------------- | ---------------------------------------------------------- |
+| Scheduled        | Blue             | Current follow-up awaiting its due date                    |
+| Overdue          | Red              | Scheduled follow-up due before the current Philippine date |
+| Completed        | Green            | Follow-up has been completed                               |
+| Cancelled        | Neutral gray     | Follow-up was cancelled                                    |
+| Superseded       | Neutral gray     | Follow-up was replaced by a newer current follow-up        |
 
 The label `Due soon` must not be used. Use `Upcoming`.
 
 ### 3.5 Priority Styling
 
-| Priority | Color | Badge treatment |
-|---|---|---|
-| Non-Urgent | Green | Light green background, dark green text |
-| Low | Blue | Light blue background, dark blue text |
-| Normal | Yellow | Light yellow background, dark yellow/brown text |
-| High | Amber | Light amber background, dark amber text |
-| Urgent | Orange | Light orange background, dark orange text |
-| Escalated | Red | Light red background, dark red text |
+| Priority   | Color  | Badge treatment                                 |
+| ---------- | ------ | ----------------------------------------------- |
+| Non-Urgent | Green  | Light green background, dark green text         |
+| Low        | Blue   | Light blue background, dark blue text           |
+| Normal     | Yellow | Light yellow background, dark yellow/brown text |
+| High       | Amber  | Light amber background, dark amber text         |
+| Urgent     | Orange | Light orange background, dark orange text       |
+| Escalated  | Red    | Light red background, dark red text             |
 
 Always display the priority label with the color.
 
@@ -173,16 +174,16 @@ Do not mix Open Sans, Lato, or other primary fonts into the interface.
 
 ### 4.2 Typography Scale
 
-| Element | Font size | Weight |
-|---|---:|---:|
-| Page title | 24–28 px | 600–700 |
-| Section heading | 18–20 px | 600 |
-| Card heading | 16 px | 600 |
-| Body text | 14–16 px | 400 |
-| Table content | 14 px | 400 |
-| Form labels | 14 px | 500–600 |
-| Helper text | 12–13 px | 400 |
-| Status badges | 12–13 px | 500–600 |
+| Element         | Font size |  Weight |
+| --------------- | --------: | ------: |
+| Page title      |  24–28 px | 600–700 |
+| Section heading |  18–20 px |     600 |
+| Card heading    |     16 px |     600 |
+| Body text       |  14–16 px |     400 |
+| Table content   |     14 px |     400 |
+| Form labels     |     14 px | 500–600 |
+| Helper text     |  12–13 px |     400 |
+| Status badges   |  12–13 px | 500–600 |
 
 ### 4.3 Typography Rules
 
@@ -211,13 +212,13 @@ If Roboto is loaded externally, consider privacy, availability, and performance.
 
 ### 5.1 Layout Areas
 
-| Area | Specification |
-|---|---|
-| Sidebar | Dark charcoal background, light navigation text, visible active state. |
-| Top bar | Page context and permitted user controls. |
-| Main content | Light gray canvas containing white cards, tables, and forms. |
-| Dashboard | High-priority metrics and claims requiring attention. |
-| Responsive layout | Collapsible sidebar and suitable table behavior on narrow screens. |
+| Area              | Specification                                                          |
+| ----------------- | ---------------------------------------------------------------------- |
+| Sidebar           | Dark charcoal background, light navigation text, visible active state. |
+| Top bar           | Page context and permitted user controls.                              |
+| Main content      | Light gray canvas containing white cards, tables, and forms.           |
+| Dashboard         | High-priority metrics and claims requiring attention.                  |
+| Responsive layout | Collapsible sidebar and suitable table behavior on narrow screens.     |
 
 ### 5.2 Sidebar Menu
 
@@ -234,16 +235,16 @@ The sidebar must include:
 
 ### 5.3 Role-Based Menu Visibility
 
-| Menu | Claim Adjuster | Supervisor | Director |
-|---|---:|---:|---:|
-| Dashboard | Yes | Yes | Yes |
-| Claims | Yes | Yes | Yes |
-| Follow-ups | Yes | Yes | Yes |
-| Action History | Yes | Yes | Yes |
-| Claim Guidance | Yes | Yes | Yes |
-| Users | No | Yes | Yes |
-| Stores | Yes — view only | Yes | Yes |
-| Service Calls | No | Yes | Yes |
+| Menu           |  Claim Adjuster | Supervisor | Director |
+| -------------- | --------------: | ---------: | -------: |
+| Dashboard      |             Yes |        Yes |      Yes |
+| Claims         |             Yes |        Yes |      Yes |
+| Follow-ups     |             Yes |        Yes |      Yes |
+| Action History |             Yes |        Yes |      Yes |
+| Claim Guidance |             Yes |        Yes |      Yes |
+| Users          |              No |        Yes |      Yes |
+| Stores         | Yes — view only |        Yes |      Yes |
+| Service Calls  |              No |        Yes |      Yes |
 
 The current page must have a distinct active state. Navigation must adapt to smaller screens and reflect user permissions.
 
@@ -365,14 +366,14 @@ Disabled appearance must correspond to actual behavior. Server-side authorizatio
 
 ### 8.2 Buttons
 
-| Variant | Purpose | Treatment |
-|---|---|---|
-| Primary | Main action | Blue background with readable white text |
-| Secondary | Alternative or cancel action | Neutral gray or outlined treatment |
-| Danger | Destructive action | Red treatment and appropriate confirmation |
-| Outline | Secondary navigation or viewing | Clear border and readable label |
-| Icon | Compact utility action | Accessible name or tooltip |
-| Disabled | Temporarily unavailable action | Clearly disabled appearance and behavior |
+| Variant   | Purpose                         | Treatment                                  |
+| --------- | ------------------------------- | ------------------------------------------ |
+| Primary   | Main action                     | Blue background with readable white text   |
+| Secondary | Alternative or cancel action    | Neutral gray or outlined treatment         |
+| Danger    | Destructive action              | Red treatment and appropriate confirmation |
+| Outline   | Secondary navigation or viewing | Clear border and readable label            |
+| Icon      | Compact utility action          | Accessible name or tooltip                 |
+| Disabled  | Temporarily unavailable action  | Clearly disabled appearance and behavior   |
 
 Buttons must prevent accidental duplicate submissions, display loading feedback where appropriate, and report operation results.
 
@@ -398,25 +399,25 @@ Form requirements:
 
 ### 8.4 Status Badges
 
-| State | Styling |
-|---|---|
-| Overdue | Light red background, dark red text |
-| Scheduled | Light blue background, dark blue text |
-| Upcoming | Light blue background, dark blue text |
-| Completed | Light green background, dark green text |
-| Cancelled | Light gray background, dark gray text |
-| Superseded | Light gray background, dark gray text |
+| State      | Styling                                 |
+| ---------- | --------------------------------------- |
+| Overdue    | Light red background, dark red text     |
+| Scheduled  | Light blue background, dark blue text   |
+| Upcoming   | Light blue background, dark blue text   |
+| Completed  | Light green background, dark green text |
+| Cancelled  | Light gray background, dark gray text   |
+| Superseded | Light gray background, dark gray text   |
 
 Badges must use consistent meanings throughout the application. Status values must come from approved application logic, not arbitrary frontend conditions.
 
 ### 8.5 Alerts and Feedback
 
-| Type | Purpose |
-|---|---|
-| Success | Confirms an operation completed |
-| Warning | Highlights a condition requiring attention |
-| Error | Explains an unsuccessful operation |
-| Information | Provides context or instructions |
+| Type        | Purpose                                    |
+| ----------- | ------------------------------------------ |
+| Success     | Confirms an operation completed            |
+| Warning     | Highlights a condition requiring attention |
+| Error       | Explains an unsuccessful operation         |
+| Information | Provides context or instructions           |
 
 Example messages:
 
@@ -471,17 +472,17 @@ Database failures must display error states, not misleading empty states.
 
 ### 8.9 Shared Spacing and Dimensions
 
-| Property | Recommended value |
-|---|---:|
-| Base spacing unit | 4 px |
-| Small gap | 8 px |
-| Standard component gap | 16 px |
-| Major section gap | 24 px |
-| Card padding | 16–24 px |
-| Standard input height | 38–44 px |
-| Button height | 38–44 px |
-| Border radius | 4–8 px |
-| Border width | 1 px |
+| Property               | Recommended value |
+| ---------------------- | ----------------: |
+| Base spacing unit      |              4 px |
+| Small gap              |              8 px |
+| Standard component gap |             16 px |
+| Major section gap      |             24 px |
+| Card padding           |          16–24 px |
+| Standard input height  |          38–44 px |
+| Button height          |          38–44 px |
+| Border radius          |            4–8 px |
+| Border width           |              1 px |
 
 These values may be adjusted to preserve readability, responsiveness, and Bootstrap compatibility.
 
@@ -489,13 +490,13 @@ These values may be adjusted to preserve readability, responsiveness, and Bootst
 
 ## 9. Implementation Alignment
 
-| Layer | Responsibility |
-|---|---|
-| HTML and PHP templates | Render page structure and reusable components |
-| CSS and Bootstrap | Apply colors, typography, spacing, and responsive layout |
-| JavaScript | Provide permitted client-side interactions and feedback |
-| PHP server logic | Validate requests, enforce authorization, and execute business operations |
-| MySQL database | Store authoritative claim, follow-up, and history records |
+| Layer                  | Responsibility                                                            |
+| ---------------------- | ------------------------------------------------------------------------- |
+| HTML and PHP templates | Render page structure and reusable components                             |
+| CSS and Bootstrap      | Apply colors, typography, spacing, and responsive layout                  |
+| JavaScript             | Provide permitted client-side interactions and feedback                   |
+| PHP server logic       | Validate requests, enforce authorization, and execute business operations |
+| MySQL database         | Store authoritative claim, follow-up, and history records                 |
 
 All security-sensitive operations must be enforced on the server. UI components do not replace authentication, authorization, validation, transaction handling, or audit controls.
 
