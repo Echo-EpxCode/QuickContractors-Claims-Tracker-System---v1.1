@@ -24,15 +24,15 @@ The application tracks claims involving third-party contractors and QuickContrac
 
 ### 2.2 Approved stack
 
-| Layer | Technology |
-|---|---|
-| Backend | Procedural PHP |
-| Database access | MySQLi with prepared statements |
-| Storage | MySQL-compatible database, InnoDB |
-| Frontend | HTML, CSS, Vanilla JavaScript, Bootstrap 5.3 |
-| Icons | Font Awesome 6 |
-| Confirmations | SweetAlert2 |
-| Hosting | InfinityFree |
+| Layer           | Technology                                   |
+| --------------- | -------------------------------------------- |
+| Backend         | Procedural PHP                               |
+| Database access | MySQLi with prepared statements              |
+| Storage         | MySQL-compatible database, InnoDB            |
+| Frontend        | HTML, CSS, Vanilla JavaScript, Bootstrap 5.3 |
+| Icons           | Font Awesome 6                               |
+| Confirmations   | SweetAlert2                                  |
+| Hosting         | InfinityFree                                 |
 
 No Laravel, PDO, or other backend framework. Attachments, file uploads, Excel import, email reminders, notifications, and external integrations are excluded. No screens, buttons, upload fields, or diagrams may imply these features exist. [DR §3]
 
@@ -42,26 +42,26 @@ No Laravel, PDO, or other backend framework. Attachments, file uploads, Excel im
 
 Each user has one role stored directly on the user record. Separate `roles` and `user_roles` tables are not required. [DR §§6.1–6.3]
 
-| Stored role | Display label | Claim visibility |
-|---|---|---|
+| Stored role      | Display label  | Claim visibility                            |
+| ---------------- | -------------- | ------------------------------------------- |
 | `Claim_Adjuster` | Claim Adjuster | Only claims currently assigned to that user |
-| `Supervisor` | Supervisor | All claims |
-| `Director` | Director | All claims |
+| `Supervisor`     | Supervisor     | All claims                                  |
+| `Director`       | Director       | All claims                                  |
 
 All three roles may create claims, update permitted claim details, change status and priority, schedule/update/complete follow-ups, and record actions within their authorized scope. Only Supervisor and Director may reassign or take over claims. [DR §§6.4–6.6]
 
 ### 3.2 Sidebar order
 
-| Order | Menu | Claim Adjuster | Supervisor | Director |
-|---|---|---|---|---|
-| 1 | Dashboard | Yes | Yes | Yes |
-| 2 | Claims | Yes | Yes | Yes |
-| 3 | Follow-ups | Yes | Yes | Yes |
-| 4 | Action History | Yes | Yes | Yes |
-| 5 | Claim Guidance | Yes | Yes | Yes |
-| 6 | Users | No | Yes | Yes |
-| 7 | Stores | View only | Yes | Yes |
-| 8 | Service Calls | No | Yes | Yes |
+| Order | Menu           | Claim Adjuster | Supervisor | Director |
+| ----- | -------------- | -------------- | ---------- | -------- |
+| 1     | Dashboard      | Yes            | Yes        | Yes      |
+| 2     | Claims         | Yes            | Yes        | Yes      |
+| 3     | Follow-ups     | Yes            | Yes        | Yes      |
+| 4     | Action History | Yes            | Yes        | Yes      |
+| 5     | Claim Guidance | Yes            | Yes        | Yes      |
+| 6     | Users          | No             | Yes        | Yes      |
+| 7     | Stores         | View only      | Yes        | Yes      |
+| 8     | Service Calls  | No             | Yes        | Yes      |
 
 Menu visibility follows DR §§8.1–8.2. A hidden menu is not authorization: direct requests must pass the same server checks. Service-call access must not become available to a Claim Adjuster simply by linking from a claim detail screen.
 
@@ -151,13 +151,13 @@ Logout invalidates authenticated session state. An expired or invalid session pr
 
 The dashboard displays these labels exactly. [DR §§8.3–8.5]
 
-| Metric | Rule |
-|---|---|
-| Open Claims | Required metric; the exact count definition needs confirmation as described in §18 |
-| Overdue Follow-ups | Current `Scheduled` follow-ups due before today's Philippine date |
-| Due Today | Current `Scheduled` follow-ups due on today's Philippine date |
-| Upcoming Follow-ups | Current `Scheduled` follow-ups due after today and through today plus 7 days |
-| Claims Requiring Attention | Distinct claims with an overdue follow-up OR priority `Urgent` or `Escalated` |
+| Metric                     | Rule                                                                               |
+| -------------------------- | ---------------------------------------------------------------------------------- |
+| Open Claims                | Required metric; the exact count definition needs confirmation as described in §18 |
+| Overdue Follow-ups         | Current `Scheduled` follow-ups due before today's Philippine date                  |
+| Due Today                  | Current `Scheduled` follow-ups due on today's Philippine date                      |
+| Upcoming Follow-ups        | Current `Scheduled` follow-ups due after today and through today plus 7 days       |
+| Claims Requiring Attention | Distinct claims with an overdue follow-up OR priority `Urgent` or `Escalated`      |
 
 Apply role scope before calculating totals. Count each claim once in Claims Requiring Attention even if both conditions apply. Do not silently exclude Resolved or Closed claims with urgent/escalated priority: the approved attention rule contains no such exclusion.
 
@@ -178,19 +178,19 @@ An empty queue shows a specific message such as “No follow-ups are currently o
 
 ### 7.1 Required form data
 
-| Data | Validation |
-|---|---|
-| `job_id` | Required and unique business claim identifier |
-| Store | Exactly one required store |
-| Claim type | `Leak`, `Damage`, or `Outdoor Damage` |
-| Party type | `Third_Party_Contractor` or `E_Tech` |
-| `contractor_email_address` | Required, validated email |
-| `legal_company_name` | Required |
-| `company_name` | Required |
-| Assigned handler | Required valid user |
-| Initial follow-up | Required current scheduled follow-up with date-only due date |
-| Priority | Required; defaults to `Normal` |
-| Status | New claim defaults to `Open` |
+| Data                       | Validation                                                   |
+| -------------------------- | ------------------------------------------------------------ |
+| `job_id`                   | Required and unique business claim identifier                |
+| Store                      | Exactly one required store                                   |
+| Claim type                 | `Leak`, `Damage`, or `Outdoor Damage`                        |
+| Party type                 | `Third_Party_Contractor` or `E_Tech`                         |
+| `contractor_email_address` | Required, validated email                                    |
+| `legal_company_name`       | Required                                                     |
+| `company_name`             | Required                                                     |
+| Assigned handler           | Required valid user                                          |
+| Initial follow-up          | Required current scheduled follow-up with date-only due date |
+| Priority                   | Required; defaults to `Normal`                               |
+| Status                     | New claim defaults to `Open`                                 |
 
 Requirements come from DR §§4.3–4.11 and §7. A service call is optional and must not become a condition of claim creation.
 
@@ -325,13 +325,13 @@ Dismissing the confirmation performs no writes. A stale or repeated cancellation
 
 ### 10.1 Exact transition matrix
 
-| From | Allowed destinations |
-|---|---|
-| Open | In Progress; Waiting; Resolved; Closed |
-| In Progress | Waiting; Resolved; Closed |
-| Waiting | In Progress; Resolved; Closed |
-| Resolved | Closed; Open |
-| Closed | Open |
+| From        | Allowed destinations                   |
+| ----------- | -------------------------------------- |
+| Open        | In Progress; Waiting; Resolved; Closed |
+| In Progress | Waiting; Resolved; Closed              |
+| Waiting     | In Progress; Resolved; Closed          |
+| Resolved    | Closed; Open                           |
+| Closed      | Open                                   |
 
 No other status transition is approved. [DR §§4.5–4.6]
 
@@ -465,11 +465,11 @@ Enforce zero-or-one service call per claim. `sc_job_id` may be null; populated v
 
 ### 13.3 Users
 
-| Actor | Permitted target accounts |
-|---|---|
-| Claim Adjuster | No user management |
-| Supervisor | Claim Adjuster accounts only |
-| Director | Claim Adjuster, Supervisor, and Director accounts |
+| Actor          | Permitted target accounts                         |
+| -------------- | ------------------------------------------------- |
+| Claim Adjuster | No user management                                |
+| Supervisor     | Claim Adjuster accounts only                      |
+| Director       | Claim Adjuster, Supervisor, and Director accounts |
 
 On create/edit/deactivate, check both the actor's role and the target account's current and requested role. A Supervisor must not promote an adjuster to Supervisor or modify a Director by submitting a forged account identifier. [DR §6.7]
 
@@ -477,13 +477,13 @@ User accounts are deactivated, not deleted. No account-deletion flow exists, inc
 
 ### 13.4 Claim guidance
 
-| Actor | View | Create/edit | Approve | Deactivate |
-|---|---|---|---|---|
-| Claim Adjuster | Yes | No | No | No |
-| Supervisor | Yes | Yes | No | No |
-| Director | Yes | Yes | Yes | Yes |
+| Actor          | View | Create/edit | Approve | Deactivate |
+| -------------- | ---- | ----------- | ------- | ---------- |
+| Claim Adjuster | Yes  | No          | No      | No         |
+| Supervisor     | Yes  | Yes         | No      | No         |
+| Director       | Yes  | Yes         | Yes     | Yes        |
 
-Guidance statuses are `Draft`, `Approved`, and `Inactive`. Every edit creates a revision; previous revisions remain viewable and cannot be deleted through the application. [DR §§6.8–6.9]
+Guidance statuses are `Draft`, `Approved`, and `Inactive`. Every edit and every status change (approval or deactivation) creates a revision; previous revisions remain viewable and cannot be deleted through the application. [DR §§6.8–6.9]
 
 Flow: open Claim Guidance, choose a permitted record, view content/revisions, select an authorized change, validate, write current content and a new revision atomically, and refresh. Director approval and deactivation require server-side role checks; deactivation additionally requires SweetAlert2 confirmation.
 
@@ -491,14 +491,14 @@ V1.1 does not define every allowed guidance status transition, whether edits to 
 
 ## 14. History and audit journeys
 
-| Data area | Responsibility | Navigation outcome |
-|---|---|---|
-| `follow_ups` | Current and historical follow-up records | Review prior due dates, handlers, outcomes, and terminal states |
-| `action_history` | Scheduled/completed/cancelled/superseded follow-ups; claim closed/reopened | Review workflow actions |
-| `claim_activity_logs` | Material status, priority, assignment, and field changes | Review change audit |
-| `claim_history` | Claim lifecycle and major status transitions | Review lifecycle chronology |
-| Assignment history | Every reassignment and take-over | Review ownership changes using approved storage mapping |
-| Guidance revisions | Every guidance edit | Review prior guidance versions |
+| Data area             | Responsibility                                                             | Navigation outcome                                              |
+| --------------------- | -------------------------------------------------------------------------- | --------------------------------------------------------------- |
+| `follow_ups`          | Current and historical follow-up records                                   | Review prior due dates, handlers, outcomes, and terminal states |
+| `action_history`      | Scheduled/completed/cancelled/superseded follow-ups; claim closed/reopened | Review workflow actions                                         |
+| `claim_activity_logs` | Material status, priority, assignment, and field changes                   | Review change audit                                             |
+| `claim_history`       | Claim lifecycle and major status transitions                               | Review lifecycle chronology                                     |
+| Assignment history    | Every reassignment and take-over                                           | Review ownership changes using approved storage mapping         |
+| Guidance revisions    | Every guidance edit and status change                                      | Review prior guidance versions                                  |
 
 Responsibilities follow DR §§5, 6.5, 6.8. An event may legitimately require more than one history responsibility, such as closure workflow plus lifecycle transition. Do not combine all records into one indistinguishable log or silently discard required records.
 
@@ -516,37 +516,37 @@ True event timestamps use UTC and convert to `Asia/Manila` for display. Dates di
 
 Let T be today's Philippine calendar date. Evaluate the current `Scheduled` follow-up:
 
-| Due date | Queue |
-|---|---|
-| Before T | Overdue |
-| Equal to T | Due Today |
-| T + 1 through T + 7 inclusive | Upcoming |
-| After T + 7 | Still scheduled; outside these three queues |
-| Completed, Cancelled, Superseded | No pending queue |
+| Due date                         | Queue                                       |
+| -------------------------------- | ------------------------------------------- |
+| Before T                         | Overdue                                     |
+| Equal to T                       | Due Today                                   |
+| T + 1 through T + 7 inclusive    | Upcoming                                    |
+| After T + 7                      | Still scheduled; outside these three queues |
+| Completed, Cancelled, Superseded | No pending queue                            |
 
 Use one consistent T for counts and rows in a request. Do not use the hosting server's unverified local date. No notification subsystem or cron process is needed merely to calculate queue membership. Never label Upcoming as “Due soon.”
 
 ## 16. Reconciled data-model diagram
 
-### 16.1 Eleven-table reconciliation candidate
+### 16.1 Approved 13-table model
 
-The old App Flow names ten tables, including `actions`, `claim_guidance`, and `claim_guidance_revisions`. Replacing `actions` with `follow_ups` and adding the required `claim_parties` yields the following eleven-table reconciliation candidate:
+Approved by the project owner on 10/29/2026: the eleven tables in TRD V1.1 plus `claim_guidance` and `claim_guidance_revisions`. `claim_types` and `claim_statuses` are lookup tables.
 
 1. `users`
 2. `stores`
 3. `claims`
-4. `claim_parties`
-5. `service_calls`
-6. `follow_ups`
-7. `action_history`
-8. `claim_activity_logs`
-9. `claim_history`
-10. `claim_guidance`
-11. `claim_guidance_revisions`
+4. `claim_types`
+5. `claim_statuses`
+6. `claim_parties`
+7. `service_calls`
+8. `follow_ups`
+9. `action_history`
+10. `claim_activity_logs`
+11. `claim_history`
+12. `claim_guidance`
+13. `claim_guidance_revisions`
 
-**Approval boundary:** this is a source-grounded reconciliation candidate, not proof that V1.1 enumerates these exact eleven names or approves their physical columns. Confirm the list in the Database Schema Design Document before SQL. Claim types and statuses can be controlled values; V1.1 does not require separate lookup tables for them.
-
-This corrects the previous generated documents' unsupported suggestion that guidance must be removed or somehow squeezed into other records because separate type/status tables are mandatory. Those earlier schema/TRD drafts need correction before implementation; this App Flow does not automatically edit them.
+Physical columns are defined in the Database Schema Design Document.
 
 ### 16.2 Conceptual relationships
 
@@ -554,6 +554,8 @@ This corrects the previous generated documents' unsupported suggestion that guid
 erDiagram
     USERS o|--o{ CLAIMS : current_handler
     STORES ||--o{ CLAIMS : has
+    CLAIM_TYPES ||--o{ CLAIMS : classifies
+    CLAIM_STATUSES ||--o{ CLAIMS : identifies
     CLAIMS ||--|| CLAIM_PARTIES : requires
     CLAIMS ||--o| SERVICE_CALLS : optionally_has
     CLAIMS ||--o{ FOLLOW_UPS : retains
@@ -563,7 +565,7 @@ erDiagram
     CLAIM_GUIDANCE ||--o{ CLAIM_GUIDANCE_REVISIONS : revisions
 ```
 
-The relationship diagram shows ten of the eleven candidate tables; `action_history` is represented separately by the responsibility map in §14. Its exact claim/follow-up linkage must be reconciled in the schema: V1.1 defines responsibility, not a mandatory direct `claim_id` column. Do not reintroduce a previously removed redundant foreign key without review.
+The relationship diagram shows twelve of the thirteen approved tables; `action_history` is represented separately by the responsibility map in §14. Its exact claim/follow-up linkage must be reconciled in the schema: V1.1 defines responsibility, not a mandatory direct `claim_id` column. Do not reintroduce a previously removed redundant foreign key without review.
 
 The diagram deliberately does not invent an assignment-history table, claim-to-guidance relationship, or physical action-history foreign-key topology. Cardinality alone does not enforce required child existence: creation transactions and the finalized integrity strategy must prevent claims without their required party.
 
@@ -571,32 +573,32 @@ The diagram deliberately does not invent an assignment-history table, claim-to-g
 
 ### 17.1 Required SweetAlert2 dialogs
 
-| Operation | Required consequence to explain |
-|---|---|
-| Take over claim | Current handler replaced; Closed claim reopens and needs a new follow-up |
-| Reassign claim | Current handler changes to selected handler |
-| Close claim | Claim closes; current scheduled follow-up cancelled |
-| Reopen claim | Claim returns to Open; missing handler/follow-up must be supplied |
-| Cancel follow-up | Follow-up removed from pending work but history retained |
-| Deactivate user | Account becomes inactive; no account deletion |
-| Deactivate store | Store becomes inactive; existing claim links retained |
-| Deactivate guidance | Guidance becomes Inactive; revisions retained |
+| Operation           | Required consequence to explain                                          |
+| ------------------- | ------------------------------------------------------------------------ |
+| Take over claim     | Current handler replaced; Closed claim reopens and needs a new follow-up |
+| Reassign claim      | Current handler changes to selected handler                              |
+| Close claim         | Claim closes; current scheduled follow-up cancelled                      |
+| Reopen claim        | Claim returns to Open; missing handler/follow-up must be supplied        |
+| Cancel follow-up    | Follow-up removed from pending work but history retained                 |
+| Deactivate user     | Account becomes inactive; no account deletion                            |
+| Deactivate store    | Store becomes inactive; existing claim links retained                    |
+| Deactivate guidance | Guidance becomes Inactive; revisions retained                            |
 
 These required dialogs originate in DR §8.9. Details must reflect the current server state. If the handler or status changes after the preview, return a conflict and request a refreshed confirmation rather than silently applying different consequences.
 
 ### 17.2 Failure outcomes
 
-| Condition | Required outcome |
-|---|---|
-| Unauthenticated/expired session | No protected data or writes; require login |
-| Unauthorized role or claim | Safe rejection; no record disclosure or partial changes |
-| Invalid field/controlled value | Specific safe validation error; retain appropriate form input |
-| Duplicate Job ID/service-call identifier | Safe duplicate error; enforce database uniqueness |
-| Follow-up replaced during editing | Conflict response; reload current work |
-| History insertion fails | Roll back related operational writes |
-| Database failure | Roll back, log technical details safely, show non-technical error |
-| Confirmation cancelled | No state change |
-| Repeated submission | No duplicate transition, workflow action, or replacement follow-up |
+| Condition                                | Required outcome                                                   |
+| ---------------------------------------- | ------------------------------------------------------------------ |
+| Unauthenticated/expired session          | No protected data or writes; require login                         |
+| Unauthorized role or claim               | Safe rejection; no record disclosure or partial changes            |
+| Invalid field/controlled value           | Specific safe validation error; retain appropriate form input      |
+| Duplicate Job ID/service-call identifier | Safe duplicate error; enforce database uniqueness                  |
+| Follow-up replaced during editing        | Conflict response; reload current work                             |
+| History insertion fails                  | Roll back related operational writes                               |
+| Database failure                         | Roll back, log technical details safely, show non-technical error  |
+| Confirmation cancelled                   | No state change                                                    |
+| Repeated submission                      | No duplicate transition, workflow action, or replacement follow-up |
 
 Do not expose credentials, raw SQL errors, stack traces, internal paths, passwords, tokens, or unnecessary claim data in error output or logs.
 
@@ -604,56 +606,56 @@ Do not expose credentials, raw SQL errors, stack traces, internal paths, passwor
 
 These are genuine unspecified details, not permission to change the approved requirements:
 
-| Item | Confirmation needed | Affected flow |
-|---|---|---|
-| Exact 11-table inventory and columns | Approve the candidate in §16 and reconcile earlier generated schema/TRD | Database setup |
-| Assignment-history storage | Map required previous/new handler, actor, time, and operation to approved storage | Reassign/take-over |
-| Open Claims metric | Status exactly Open, or all active statuses? | Dashboard count |
-| Last Follow-up Date | Last due date, completion date, or another documented date? | Claims list |
-| Assigned-handler filter wording | Confirm option list and role visibility; never broaden record authorization | Claims search |
-| Initial assignment | Define Claim Adjuster assignment choices and eligible handler roles | New claim |
-| Follow-up update semantics | In-place audited edit versus replacement/superseding | Update follow-up |
-| Active claim completion/cancellation | Confirm atomic replacement or terminal-state behavior | Follow-up completion/cancellation |
-| Resolution side effects | Whether a current follow-up is retained/cancelled on Resolved | Resolve |
-| Guidance publication | Status transitions, visibility by status, and approval after edits | Guidance |
-| Account deactivation | Outstanding-work handling, self-deactivation, last-Director protection | Users |
-| Date-only convention | Preserve intended calendar due date alongside UTC timestamps | Date handling |
+| Item                                             | Confirmation needed                                                               | Affected flow                     |
+| ------------------------------------------------ | --------------------------------------------------------------------------------- | --------------------------------- |
+| Final column definitions for the guidance tables | Confirmed in Schema §4.12 and §4.13; revisit only if requirements change          | Database setup                    |
+| Assignment-history storage                       | Map required previous/new handler, actor, time, and operation to approved storage | Reassign/take-over                |
+| Open Claims metric                               | Status exactly Open, or all active statuses?                                      | Dashboard count                   |
+| Last Follow-up Date                              | Last due date, completion date, or another documented date?                       | Claims list                       |
+| Assigned-handler filter wording                  | Confirm option list and role visibility; never broaden record authorization       | Claims search                     |
+| Initial assignment                               | Define Claim Adjuster assignment choices and eligible handler roles               | New claim                         |
+| Follow-up update semantics                       | In-place audited edit versus replacement/superseding                              | Update follow-up                  |
+| Active claim completion/cancellation             | Confirm atomic replacement or terminal-state behavior                             | Follow-up completion/cancellation |
+| Resolution side effects                          | Whether a current follow-up is retained/cancelled on Resolved                     | Resolve                           |
+| Guidance publication                             | Status transitions, visibility by status, and approval after edits                | Guidance                          |
+| Account deactivation                             | Outstanding-work handling, self-deactivation, last-Director protection            | Users                             |
+| Date-only convention                             | Preserve intended calendar due date alongside UTC timestamps                      | Date handling                     |
 
 Pause only the affected implementation until a decision is recorded. Do not describe the whole application as implemented, tested, or approved for production.
 
 ## 19. Acceptance scenarios
 
-| ID | Scenario | Expected result |
-|---|---|---|
-| AF-01 | Claim Adjuster opens another user's claim directly | Access denied; no claim or history disclosure |
-| AF-02 | Create valid claim | Open/Normal defaults, required party/store/handler/follow-up saved together |
-| AF-03 | Party insert fails during creation | Entire claim creation rolled back |
-| AF-04 | Two submissions use same Job ID | Only one claim saved |
-| AF-05 | New follow-up replaces current one | Old Superseded; new sole Scheduled record; history retained |
-| AF-06 | Two requests replace same follow-up concurrently | At most one current follow-up; no lost history |
-| AF-07 | Due yesterday, today, +7 days, +8 days | Overdue, Due Today, Upcoming, outside Upcoming respectively |
-| AF-08 | Cancel confirmation dismissed | No writes |
-| AF-09 | Close assigned claim | Closed; current scheduled follow-up Cancelled; required history committed |
-| AF-10 | Reopen without required missing data | Validation failure; no partially reopened claim |
-| AF-11 | Claim Adjuster submits reassignment | Rejected |
-| AF-12 | Director takes over Closed claim | Handler replaced, Open status, new dated follow-up, assignment/lifecycle/workflow history |
-| AF-13 | Supervisor takes over Resolved claim | Ownership changes; no automatic reopening inferred |
-| AF-14 | Reassign claim | Current follow-up follows new handler; historical handlers unchanged |
-| AF-15 | Supervisor attempts Director-account edit | Rejected |
-| AF-16 | Claim Adjuster opens Service Calls endpoint | Rejected |
-| AF-17 | Add second service call or duplicate populated sc_job_id | Rejected safely |
-| AF-18 | Supervisor edits guidance | New revision retained; no approve/deactivate privilege |
-| AF-19 | Claim meets both attention conditions | Counted once |
-| AF-20 | List has more than 25 authorized matches | 25 per page; filters and access scope preserved |
-| AF-21 | History write fails on closure | Operational closure and cancellation rolled back |
-| AF-22 | Follow-up crosses Philippine midnight | Counts and queue use Philippine date, not server local time |
+| ID    | Scenario                                                 | Expected result                                                                           |
+| ----- | -------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
+| AF-01 | Claim Adjuster opens another user's claim directly       | Access denied; no claim or history disclosure                                             |
+| AF-02 | Create valid claim                                       | Open/Normal defaults, required party/store/handler/follow-up saved together               |
+| AF-03 | Party insert fails during creation                       | Entire claim creation rolled back                                                         |
+| AF-04 | Two submissions use same Job ID                          | Only one claim saved                                                                      |
+| AF-05 | New follow-up replaces current one                       | Old Superseded; new sole Scheduled record; history retained                               |
+| AF-06 | Two requests replace same follow-up concurrently         | At most one current follow-up; no lost history                                            |
+| AF-07 | Due yesterday, today, +7 days, +8 days                   | Overdue, Due Today, Upcoming, outside Upcoming respectively                               |
+| AF-08 | Cancel confirmation dismissed                            | No writes                                                                                 |
+| AF-09 | Close assigned claim                                     | Closed; current scheduled follow-up Cancelled; required history committed                 |
+| AF-10 | Reopen without required missing data                     | Validation failure; no partially reopened claim                                           |
+| AF-11 | Claim Adjuster submits reassignment                      | Rejected                                                                                  |
+| AF-12 | Director takes over Closed claim                         | Handler replaced, Open status, new dated follow-up, assignment/lifecycle/workflow history |
+| AF-13 | Supervisor takes over Resolved claim                     | Ownership changes; no automatic reopening inferred                                        |
+| AF-14 | Reassign claim                                           | Current follow-up follows new handler; historical handlers unchanged                      |
+| AF-15 | Supervisor attempts Director-account edit                | Rejected                                                                                  |
+| AF-16 | Claim Adjuster opens Service Calls endpoint              | Rejected                                                                                  |
+| AF-17 | Add second service call or duplicate populated sc_job_id | Rejected safely                                                                           |
+| AF-18 | Supervisor edits guidance                                | New revision retained; no approve/deactivate privilege                                    |
+| AF-19 | Claim meets both attention conditions                    | Counted once                                                                              |
+| AF-20 | List has more than 25 authorized matches                 | 25 per page; filters and access scope preserved                                           |
+| AF-21 | History write fails on closure                           | Operational closure and cancellation rolled back                                          |
+| AF-22 | Follow-up crosses Philippine midnight                    | Counts and queue use Philippine date, not server local time                               |
 
 These are test specifications, not executed test results.
 
 ## 20. Implementation handoff
 
 1. Review this revised App Flow against the approved Decision Record.
-2. Resolve the affected open decisions and correct the earlier schema/TRD table-inventory error.
+2. Resolve the remaining open decisions in §18.
 3. Approve the physical schema and preserve the existing approved project structure.
 4. Inspect actual project files before proposing any code change.
 5. Explain the smallest necessary change and obtain approval before PHP/SQL implementation.
