@@ -666,4 +666,12 @@ A milestone is not complete merely because code has been written; required behav
 
 ---
 
+## 9. Reconciliation Gate
+
+The Document Reconciliation Decision Record V1.1 is the completed Phase 1 authority. Before Phase 2 begins, the requirements checklist and test plan must include: the 13-table model; derived Overdue logic; `DATE` due dates; active-status Open Claims; customer-contact Last Follow-up Date; atomic active-claim replacement follow-ups; status-transition dates; assignment-history mapping; initial-handler eligibility; guidance lifecycle; and deactivation safeguards.
+
+No schema or application implementation may substitute an alternative behavior for these decisions.
+
+---
+
 **End of Implementation Plan — Version 1.1**

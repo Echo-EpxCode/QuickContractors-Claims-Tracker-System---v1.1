@@ -559,4 +559,19 @@ Any material deviation requires user approval before implementation.
 
 ---
 
+## 12. Reconciled Technical Baseline
+
+The V1.1 Decision Record is available in this project folder and resolves the remaining implementation choices:
+
+- Keep the approved 13 tables only. Store assignment history in `claim_activity_logs` using `claim_reassigned` or `claim_taken_over`, `assigned_handler_id`, old/new handler values, actor, and UTC timestamp.
+- Use `follow_ups.due_date` as a required calendar `DATE`; do not time-zone-convert it. Store actual event timestamps in UTC and render them in `Asia/Manila`.
+- Persist current follow-ups as `Scheduled`; calculate Overdue at query/display time. Pending queues include only current Scheduled rows.
+- Treat `Open`, `In Progress`, and `Waiting` as active. Completion/cancellation of an active claim's current follow-up must atomically create a replacement scheduled follow-up. Resolving/closing records a status timestamp and creates no replacement.
+- `users.email`, `stores.store_code`, and `claims.subject` are nullable. New claims default to `Open` and `Normal`.
+- Use restricted/safe deletion behavior for operational and history relationships; never cascade-delete history or revisions.
+
+The decisions in this section supersede earlier statements that list `Overdue` as a persisted follow-up status or defer these physical-schema choices.
+
+---
+
 **End of TRD — Version 1.1**

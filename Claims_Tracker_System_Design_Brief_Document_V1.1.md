@@ -501,4 +501,16 @@ All security-sensitive operations must be enforced on the server. UI components 
 
 ---
 
+## 10. Reconciled Display Rules
+
+- **Open Claims** represents authorized claims with status `Open`, `In Progress`, or `Waiting`.
+- **Last Follow-up Date** displays the latest completed customer contact by a Claim Adjuster, in `Asia/Manila` date format. It is not simply the last scheduled due date.
+- **Overdue** is a derived display state for a current Scheduled follow-up due before the current Philippine date; it is not a stored status.
+- Normal guidance views show Approved guidance only. Draft and Inactive content must not be exposed to Claim Adjusters.
+- Editing Approved guidance returns it to Draft; its next publication requires Director approval. Inactive guidance is not reactivated in V1.0.
+
+These visual rules implement the controlling Document Reconciliation Decision Record V1.1 and do not alter server-side authorization.
+
+---
+
 **End of Design Brief Document — Version 1.1**

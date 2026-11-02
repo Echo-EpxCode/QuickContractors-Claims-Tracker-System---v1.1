@@ -1,10 +1,10 @@
 # Claims Tracker System
 
-## Design Brief Document — Version 1.1
+## Project Instructions — Version 1.1
 
 **Document status:** Approved for implementation  
 **Version:** 1.1  
-**Supersedes:** Design Brief Version 1.0  
+**Supersedes:** Project Instructions Version 1.0
 **Date:** October 29, 2026  
 **Authoritative reconciliation source:** `Claims_Tracker_System_Document_Reconciliation_Decision_Record_V1.1.md`
 
@@ -14,9 +14,9 @@
 
 ### 1.1 Purpose
 
-This Design Brief defines the visual design standards for the Claims Tracker System user interface, including brand identity, color palette, typography, layout, reusable components, dashboard metrics, claims-list structure, filters, follow-up states, and confirmation dialogs.
+These Project Instructions define the presentation and implementation-boundary standards for the Claims Tracker System user interface, including brand identity, color palette, typography, layout, reusable components, dashboard metrics, claims-list structure, filters, follow-up states, and confirmation dialogs.
 
-It governs presentation and interaction only. It does not alter approved permissions, claim lifecycle rules, database structure, or business rules.
+It governs presentation and interaction only. It does not alter approved permissions, claim lifecycle rules, database structure, or business rules. The controlling reconciliation authority is `Claims_Tracker_System_Document_Reconciliation_Decision_Record_V1.1.md`.
 
 ### 1.2 Design Objectives
 
@@ -499,6 +499,16 @@ These values may be adjusted to preserve readability, responsiveness, and Bootst
 | MySQL database         | Store authoritative claim, follow-up, and history records                 |
 
 All security-sensitive operations must be enforced on the server. UI components do not replace authentication, authorization, validation, transaction handling, or audit controls.
+
+---
+
+## 10. Reconciled Instruction Baseline
+
+- Build against the approved 13-table model only; do not add tables or excluded features.
+- Treat Overdue as a derived display state of Scheduled follow-ups. Display Open Claims as active claims (`Open`, `In Progress`, `Waiting`).
+- Display Last Follow-up Date as the latest completed customer contact by a Claim Adjuster.
+- Show only Approved guidance in normal views. Approved guidance edits return to Draft and require Director approval before visibility.
+- The Document Reconciliation Decision Record V1.1 resolves workflow, schema, assignment, and account-deactivation rules not governed by this presentation document.
 
 ---
 

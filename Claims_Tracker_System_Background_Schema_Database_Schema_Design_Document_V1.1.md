@@ -660,4 +660,23 @@ Before implementation proceeds beyond database setup, verify:
 
 ---
 
+## 11. Reconciled Physical Schema and Workflow Rules
+
+The V1.1 Decision Record finalizes the following specification details:
+
+| Area | Approved rule |
+| --- | --- |
+| Nullable fields | `users.email`, `stores.store_code`, and `claims.subject` are nullable. |
+| Date-only deadline | `follow_ups.due_date` is `DATE NOT NULL`, represents the intended calendar date, and is not converted as a timestamp. |
+| UTC events | `created_at`, `updated_at`, `completed_at`, audit events, and status changes are UTC `DATETIME` values. |
+| Assignment history | `claim_activity_logs` stores reassignment/take-over with event code, `assigned_handler_id`, old/new IDs, actor, and UTC time. |
+| Overdue | Derived from a current `Scheduled` follow-up and the `Asia/Manila` current date; do not persist `Overdue`. |
+| Active claims | `Open`, `In Progress`, and `Waiting`. |
+| Resolved/closed dates | Store the UTC status-transition event in `claim_history`; display it as the resolved/closed date. |
+| Delete behavior | Use `RESTRICT` or equivalent safe behavior; history and guidance revisions must never cascade-delete. |
+
+`Scheduled`, `Completed`, `Cancelled`, and `Superseded` are the only persisted follow-up statuses. The prior references to persisted `Overdue` are superseded by this section.
+
+---
+
 **End of Background Schema / Database Schema Design Document — Version 1.1**

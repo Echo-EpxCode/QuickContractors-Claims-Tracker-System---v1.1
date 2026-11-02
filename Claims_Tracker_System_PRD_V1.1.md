@@ -852,4 +852,20 @@ The V1.1 Decision Record and this PRD are the authoritative product requirements
 
 ---
 
+## 11. Reconciled Implementation Baseline
+
+The approved **Document Reconciliation Decision Record V1.1** resolves the following requirements for this PRD:
+
+- Active claims are `Open`, `In Progress`, and `Waiting`; **Open Claims** counts those records within authorized scope.
+- `Overdue` is derived from a current `Scheduled` follow-up due before the current `Asia/Manila` date; it is not persisted as a follow-up status.
+- **Last Follow-up Date** is the displayed `Asia/Manila` date of the latest completed customer contact by a Claim Adjuster. A completion without customer contact does not update that value.
+- Completing or cancelling the current follow-up on an active claim requires a replacement dated `Scheduled` follow-up in the same transaction. Resolving or closing does not create a replacement follow-up; closing cancels the current follow-up.
+- Claim Adjusters self-assign when creating a claim. Supervisors and Directors may assign any active user.
+- Guidance is visible in normal views only when `Approved`; edits to Approved guidance return it to `Draft`; the allowed lifecycle is `Draft` → `Approved` → `Inactive`.
+- A user cannot self-deactivate, the final active Director cannot be deactivated, and a user with active claims must have them reassigned before deactivation.
+
+These rules supersede any earlier ambiguous wording in this document.
+
+---
+
 **End of PRD — Version 1.1**

@@ -2,7 +2,7 @@
 
 **Document version:** 1.1  
 **Application release:** V1.0  
-**Status:** Revised draft for user review; not an implementation or testing approval  
+**Status:** Approved implementation flow reference
 **Prepared:** October 29, 2026  
 **Supersedes:** App Flow V1.0 for reconciliation review  
 **Controlling reference:** Claims_Tracker_System_Document_Reconciliation_Decision_Record_V1.1.md  
@@ -153,7 +153,7 @@ The dashboard displays these labels exactly. [DR §§8.3–8.5]
 
 | Metric                     | Rule                                                                               |
 | -------------------------- | ---------------------------------------------------------------------------------- |
-| Open Claims                | Required metric; the exact count definition needs confirmation as described in §18 |
+| Open Claims                | Authorized claims whose status is `Open`, `In Progress`, or `Waiting`              |
 | Overdue Follow-ups         | Current `Scheduled` follow-ups due before today's Philippine date                  |
 | Due Today                  | Current `Scheduled` follow-ups due on today's Philippine date                      |
 | Upcoming Follow-ups        | Current `Scheduled` follow-ups due after today and through today plus 7 days       |
@@ -216,7 +216,7 @@ flowchart TD
 
 The database unique constraint must reject duplicate Job IDs even if two requests pass a pre-check. If any required party, follow-up, or history write fails, do not retain a partial claim.
 
-For a Claim Adjuster, creation-time assignment choices are not fully specified in V1.1. Do not infer that permission to create allows assignment to another user; resolve §18 before implementing that control.
+Claim Adjusters self-assign on creation and cannot select another handler. Supervisors and Directors may select any active user.
 
 ## 8. Find, view, and edit claims
 
@@ -266,7 +266,7 @@ A party may change after creation, but the old party information must remain tra
 
 Use `follow_ups`, not `actions`. One claim may have many historical follow-ups but at most one current scheduled follow-up. The current follow-up follows the current claim handler; historical follow-ups retain their original handler. [DR §4.11]
 
-Approved status labels are `Scheduled`, `Overdue`, `Completed`, `Cancelled`, and `Superseded`. For queue calculations, V1.1 explicitly defines Overdue as a derived state of a row whose stored status remains `Scheduled`; do not require a nightly update to persist `Overdue` before a claim appears in the queue. Any physical use of a stored `Overdue` value needs a reconciled schema rule before implementation.
+Persisted status labels are `Scheduled`, `Completed`, `Cancelled`, and `Superseded`. `Overdue` is a derived queue/display state of a current `Scheduled` row whose due date is before the current `Asia/Manila` date; it is never persisted and needs no scheduled update job.
 
 ### 9.2 Schedule or replace
 
@@ -565,7 +565,7 @@ erDiagram
     CLAIM_GUIDANCE ||--o{ CLAIM_GUIDANCE_REVISIONS : revisions
 ```
 
-The relationship diagram shows twelve of the thirteen approved tables; `action_history` is represented separately by the responsibility map in §14. Its exact claim/follow-up linkage must be reconciled in the schema: V1.1 defines responsibility, not a mandatory direct `claim_id` column. Do not reintroduce a previously removed redundant foreign key without review.
+The relationship diagram shows twelve of the thirteen approved tables; `action_history` is represented separately by the responsibility map in §14. Its approved physical linkage is `claim_id` with an optional `follow_up_id`, as defined in the reconciled Database Schema Design Document. Do not add a separate assignment-history table; assignment events use `claim_activity_logs`.
 
 The diagram deliberately does not invent an assignment-history table, claim-to-guidance relationship, or physical action-history foreign-key topology. Cardinality alone does not enforce required child existence: creation transactions and the finalized integrity strategy must prevent claims without their required party.
 
@@ -602,24 +602,24 @@ These required dialogs originate in DR §8.9. Details must reflect the current s
 
 Do not expose credentials, raw SQL errors, stack traces, internal paths, passwords, tokens, or unnecessary claim data in error output or logs.
 
-## 18. Decisions before implementation
+## 18. Superseded pre-implementation decisions
 
-These are genuine unspecified details, not permission to change the approved requirements:
+These items were open when this draft was prepared. They are resolved by `Claims_Tracker_System_Document_Reconciliation_Decision_Record_V1.1.md` and are retained only as historical review context; they are not open implementation decisions.
 
-| Item                                             | Confirmation needed                                                               | Affected flow                     |
+| Item                                             | Approved decision or remaining scope note                                         | Affected flow                     |
 | ------------------------------------------------ | --------------------------------------------------------------------------------- | --------------------------------- |
-| Final column definitions for the guidance tables | Confirmed in Schema §4.12 and §4.13; revisit only if requirements change          | Database setup                    |
-| Assignment-history storage                       | Map required previous/new handler, actor, time, and operation to approved storage | Reassign/take-over                |
-| Open Claims metric                               | Status exactly Open, or all active statuses?                                      | Dashboard count                   |
-| Last Follow-up Date                              | Last due date, completion date, or another documented date?                       | Claims list                       |
-| Assigned-handler filter wording                  | Confirm option list and role visibility; never broaden record authorization       | Claims search                     |
-| Initial assignment                               | Define Claim Adjuster assignment choices and eligible handler roles               | New claim                         |
-| Follow-up update semantics                       | In-place audited edit versus replacement/superseding                              | Update follow-up                  |
-| Active claim completion/cancellation             | Confirm atomic replacement or terminal-state behavior                             | Follow-up completion/cancellation |
-| Resolution side effects                          | Whether a current follow-up is retained/cancelled on Resolved                     | Resolve                           |
-| Guidance publication                             | Status transitions, visibility by status, and approval after edits                | Guidance                          |
-| Account deactivation                             | Outstanding-work handling, self-deactivation, last-Director protection            | Users                             |
-| Date-only convention                             | Preserve intended calendar due date alongside UTC timestamps                      | Date handling                     |
+| Final column definitions for the guidance tables | Defined by the reconciled schema and Decision Record                              | Database setup                    |
+| Assignment-history storage                       | `claim_activity_logs` holds approved assignment audit values                      | Reassign/take-over                |
+| Open Claims metric                               | Open, In Progress, and Waiting within authorized scope                            | Dashboard count                   |
+| Last Follow-up Date                              | Latest completed Claim Adjuster customer contact                                  | Claims list                       |
+| Assigned-handler filter wording                  | Filter options are Claim Adjusters; authorization scope is never broadened        | Claims search                     |
+| Initial assignment                               | Adjusters self-assign; management selects any active user                         | New claim                         |
+| Follow-up update semantics                       | Still requires a separately approved update-versus-supersede rule                 | Update follow-up                  |
+| Active claim completion/cancellation             | Atomic replacement Scheduled follow-up is required                                | Follow-up completion/cancellation |
+| Resolution side effects                          | No replacement follow-up; record the resolved timestamp                           | Resolve                           |
+| Guidance publication                             | Approved only is visible; edits return to Draft; Draft → Approved → Inactive      | Guidance                          |
+| Account deactivation                             | Reassign active claims; block self and final-Director deactivation                | Users                             |
+| Date-only convention                             | `follow_ups.due_date` is a calendar DATE, not a converted timestamp               | Date handling                     |
 
 Pause only the affected implementation until a decision is recorded. Do not describe the whole application as implemented, tested, or approved for production.
 
@@ -666,4 +666,4 @@ These are test specifications, not executed test results.
 
 `docs: reconcile app flow with decision record v1.1`
 
-**End of App Flow V1.1 — revised draft for review.**
+**End of App Flow V1.1 — approved implementation flow reference.**
